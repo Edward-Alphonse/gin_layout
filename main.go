@@ -12,15 +12,9 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	//"monorepo/pkg/config"
-	//"monorepo/service/http/hello_world/client"
-	//"monorepo/service/rpc/hello_word/kitex_gen/monorepo/rpc/hello_world"
-
-	//"gin_layout/internal/libs/config"
-
-	"gin_layout/internal/biz/router/app1"
+	"gin_layout/internal/biz/router"
 	"gin_layout/internal/config"
-	"gin_layout/internal/mysql"
+	"gin_layout/internal/db"
 	"gin_layout/internal/redis"
 )
 
@@ -31,12 +25,12 @@ var (
 func main() {
 	flag.Parse()
 	cfg := config.Init(*configPath)
-	mysql.Init(cfg.Mysql)
+	db.Init(cfg.Mysql)
 	redis.Init(cfg.Redis)
 
 	port := cfg.App.Port
 	r := gin.Default()
-	r.GET("/app1/hello", app1.Hello)
+	r.GET("/app1/hello", router.Hello)
 
 	srv := &http.Server{
 		Addr:    ":" + port,

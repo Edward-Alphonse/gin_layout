@@ -5,9 +5,9 @@ import (
 
 	"github.com/pkg/errors"
 
+	"gin_layout/internal/db"
 	"gin_layout/internal/infra/model"
 	"gin_layout/internal/infra/repo"
-	"gin_layout/internal/mysql"
 )
 
 type GetHelloLoader struct {
@@ -25,7 +25,7 @@ func NewGetHelloLoader(ctx context.Context, id uint64) *GetHelloLoader {
 }
 
 func (l *GetHelloLoader) Load() error {
-	r := repo.NewHelloRepo(mysql.GetDB())
+	r := repo.NewHelloRepo(db.GetDB())
 	res, err := r.GetText(l.ctx, l.Id)
 	if err != nil {
 		return errors.Wrap(err, "get hello")

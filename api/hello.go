@@ -1,4 +1,4 @@
-package app1
+package api
 
 type HelloRequest struct {
 }
