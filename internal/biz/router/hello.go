@@ -8,7 +8,7 @@ import (
 )
 
 func Hello(c *gin.Context) {
-	req := &api.HelloRequest{}
+	req := &api.GetHelloRequest{}
 	h := handler.NewHelloHandler(c, req)
 	if err := h.Handle(); err != nil {
 		c.JSON(500, gin.H{})

@@ -5,8 +5,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"gin_layout/internal/service/domain2/entity"
-	"gin_layout/internal/service/domain2/service"
+	"gin_layout/internal/service/domain2"
+	"gin_layout/internal/service/domain2/api"
 )
 
 type GetWorldLoader struct {
@@ -24,8 +24,8 @@ func NewGetWorldLoader(ctx context.Context, text string) *GetWorldLoader {
 }
 
 func (l *GetWorldLoader) Load() error {
-	req := &entity.GetWorldRequest{}
-	s := service.Service{}
+	req := &api.GetWorldRequest{}
+	s := domain2.Service{}
 	resp, err := s.GetWorld(l.ctx, req)
 	if err != nil {
 		return errors.Wrap(err, "GetWorld")

@@ -13,19 +13,18 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"gin_layout/internal/biz/router"
-	"gin_layout/internal/config"
-	"gin_layout/internal/db"
-	"gin_layout/internal/redis"
+	"gin_layout/internal/libs/config"
+	"gin_layout/internal/libs/redis"
 )
 
 var (
-	configPath = flag.String("config", "./config/config.yaml", "User Account Service address")
+	configPath = flag.String("config", "./config.yaml", "User Account Service address")
 )
 
 func main() {
 	flag.Parse()
-	cfg := config.Init(*configPath)
-	db.Init(cfg.Mysql)
+	cfg := config.InitWith(*configPath)
+	//db.Init(cfg.MySQL)
 	redis.Init(cfg.Redis)
 
 	port := cfg.App.Port

@@ -5,31 +5,35 @@ import (
 
 	"github.com/pkg/errors"
 
-	"gin_layout/internal/db"
-	"gin_layout/internal/infra/model"
-	"gin_layout/internal/infra/repo"
+	"gin_layout/internal/service/domain1"
+	"gin_layout/internal/service/domain1/api"
 )
 
 type GetHelloLoader struct {
 	ctx context.Context
-	Id  uint64
+	id  uint64
 
-	Resp *model.Hello
+	Result string
 }
 
 func NewGetHelloLoader(ctx context.Context, id uint64) *GetHelloLoader {
 	return &GetHelloLoader{
 		ctx: ctx,
-		Id:  id,
+		id:  id,
 	}
 }
 
 func (l *GetHelloLoader) Load() error {
-	r := repo.NewHelloRepo(db.GetDB())
-	res, err := r.GetText(l.ctx, l.Id)
-	if err != nil {
-		return errors.Wrap(err, "get hello")
+	req := &api.GetHelloRequest{
+		Id: l.id,
 	}
-	l.Resp = res
+
+	s := domain1.Service{}
+	resp, err := s.GetHello(l.ctx, req)
+	if err != nil {
+		return errors.Wrap(err, "GetHello")
+	}
+
+	l.Result = resp.Text
 	return nil
 }

@@ -5,7 +5,27 @@ import (
 	"log"
 
 	"github.com/spf13/viper"
+
+	"gin_layout/internal/libs/db"
+	"gin_layout/internal/libs/redis"
 )
+
+type App struct {
+	Port string
+}
+
+type Configuration struct {
+	App   App
+	MySQL *db.Config
+	Redis *redis.Config
+}
+
+var Cfg *Configuration
+
+func InitWith(path string) *Configuration {
+	Cfg = Init[Configuration](path)
+	return Cfg
+}
 
 func Init[P any](path string) *P {
 	v := viper.New()
