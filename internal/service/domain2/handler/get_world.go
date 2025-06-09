@@ -3,21 +3,17 @@ package handler
 import (
 	"context"
 
-	"github.com/pkg/errors"
-	"github.com/zeromicro/go-zero/core/mr"
-
-	"gin_layout/internal/infra/loader"
-	"gin_layout/internal/service/domain2/entity"
+	"gin_layout/internal/service/domain2/api"
 )
 
 type GetWorldHandler struct {
 	ctx context.Context
-	req *entity.GetWorldRequest
+	req *api.GetWorldRequest
 
-	Resp *entity.GetWorldResponse
+	Resp *api.GetWorldResponse
 }
 
-func NewGetWorldHandler(ctx context.Context, req *entity.GetWorldRequest) *GetWorldHandler {
+func NewGetWorldHandler(ctx context.Context, req *api.GetWorldRequest) *GetWorldHandler {
 	return &GetWorldHandler{
 		ctx: ctx,
 		req: req,
@@ -25,14 +21,8 @@ func NewGetWorldHandler(ctx context.Context, req *entity.GetWorldRequest) *GetWo
 }
 
 func (h *GetWorldHandler) Handle() error {
-	group := make([]func() error, 0)
-	getHelloLoader := loader.NewGetHelloLoader(h.ctx, h.req.Id)
-	group = append(group, getHelloLoader.Load)
-	if err := mr.Finish(group...); err != nil {
-		return errors.Wrap(err, "GetWorldHandler")
-	}
-	h.Resp = &entity.GetWorldResponse{
-		Text: getHelloLoader.Resp.Text,
+	h.Resp = &api.GetWorldResponse{
+		Text: "world",
 	}
 	return nil
 }

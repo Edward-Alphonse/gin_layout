@@ -1,9 +1,9 @@
 package api
 
-type HelloRequest struct {
+type GetHelloRequest struct {
 }
 
-type HelloResponse struct {
+type GetHelloResponse struct {
 	Text1 string `json:"text1"`
 	Text2 string `json:"text2"`
 }

@@ -3,29 +3,28 @@
 切换到 multi_cmd分支可查看多个 main函数入口示例
 ``` 
 .
-├── api                      #  前后端接口参数，DTO 对象
-├── config                   # 系统配置
-│   └── config.yaml
-├── idl                      #  api 中 DTO 对象的 PB 定义
+├── api                     #  前后端接口参数，DTO 对象
+├── config.yaml             # 系统配置
+├── idl                     #  api 中 DTO 对象的 PB 定义
 ├── internal
-│   ├── biz                  # 路由和业务逻辑
+│   ├── biz                 # http层路由和业务逻辑，在 http 层不直接读写 db，而是通过domain 进行操作
 │   │   ├── handler         # DDD 架构中的 application 层，处理主要的业务逻辑
 │   │   └── router          # 路由，处理参数的解析和返回结果
-│   ├── config               # 系统配置初始化逻辑 
-│   ├── db                   # 数据库的初始化逻辑 
-│   ├── infra                # DDD 架构 中 infra 层，存放数据 model 和持久化操作
-│   │   ├── loader          # 对数据访问层接口的并发封装，非必需
-│   │   ├── model           # 数据表 持久化对象，PO 对象
-│   │   └── repo            # 数据库访问层
-│   ├── logger               # 日志包初始化逻辑   
-│   ├── consts               # 公共常量、变量 
-│   ├── utils                # 常用工具函数
-│   ├── redis                # redis 的初始化逻辑
-│   └── service              # DDD 架构中的 domain 层
-│   │   ├── domain1          # domain领域名称
-│   │   │   ├── entity      # domain 接口的入参和出参，DO 对象
+│   ├── libs                # DDD 架构 中 infra 层，存放数据 model 和持久化操作
+│   │   ├── db              # 数据库的初始化逻辑 
+│   │   ├── config          # 系统配置初始化逻辑 
+│   │   ├── logger          # 日志包初始化逻辑   
+│   │   └── router          # redis 的初始化逻辑
+│   ├── loader              # 对多个service的并发访问需要包转成 loader
+│   ├── consts              # 公共常量、变量，不包含 api 层的常量，api层的常量和变量属于接口参数的一部分 
+│   ├── utils               # 常用工具函数               
+│   └── service             # DDD 架构中的 domain 层，domain包含一个原子化的业务，涉及到多张数据表或者service的操作
+│   │   ├── domain1         # domain领域名称
+│   │   │   ├── api         # domain 接口的入参和出参，DO 对象
 │   │   │   ├── handler     # domain 实际的业务处理
-│   │   │   ├── loader      # 对 service 接口的并发封装，非必需
+│   │   │   ├── loader      # 对下游多个service 接口的并发封装，非必需
+│   │   │   ├── model       # 数据表 持久化对象，PO 对象
+│   │   │   ├── repo        # 数据库访问层，service 直接操作 model 时需要           
 │   │   │   └── service     # domain 的对外接口
 ├── Dockerfile
 ├── docker-compose.yaml
@@ -34,3 +33,4 @@
 ├── go.sum
 └── main.go
 ```
+> 每一个 domain 单独抽出来可以视作一个 rpc 的微服务

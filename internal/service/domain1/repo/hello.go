@@ -5,7 +5,7 @@ import (
 
 	"gorm.io/gorm"
 
-	"gin_layout/internal/infra/model"
+	"gin_layout/internal/service/domain1/model"
 )
 
 type HelloRepo struct {

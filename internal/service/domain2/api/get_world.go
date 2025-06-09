@@ -1,4 +1,4 @@
-package entity
+package api
 
 type GetWorldRequest struct {
 	Id uint64
