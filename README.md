@@ -34,3 +34,17 @@
 └── main.go
 ```
 > 每一个 domain 单独抽出来可以视作一个 rpc 的微服务
+
+
+## docker 镜像编译和部署
+1. 编译镜像，指定名称和版本
+```
+docker build -t name:tag ./
+docker build -t test:0.0.1 ./
+```
+
+2. 部署镜像，将/data/conf与宿主机路径关联，config.yaml下发到/data/conf中即可读取
+```
+docker run -v 宿主机路径:挂载路径 test
+docker run -v /Users/hezhichang/go/src/gin_layout:/data/conf test 
+```
