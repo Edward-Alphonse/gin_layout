@@ -34,3 +34,6 @@
 └── main.go
 ```
 > 每一个 domain 单独抽出来可以视作一个 rpc 的微服务
+
+## 部署
+部署参考 feature/deploy_image 分支
